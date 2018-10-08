@@ -1,0 +1,592 @@
+info:
+  description: "Entities used in brapi-compilant calls."
+  version: '1.0.0'
+  title: BrAPI Domain
+
+definitions:
+  Program:
+    type: object
+    properties:
+      programDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key. Maps to brapi abbreviation
+      name:
+        type: string
+        description: name of the program, Maps to brapi same field
+      description:
+        type: string
+        description: Explanation of program's goals, functions, etc. Maps to brapi objective
+  Project:
+    type: object
+    properties:
+      projectDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key.
+      name:
+        type: string
+        description: name of the program
+      description:
+        type: string
+        description: explanation of goals, indicatior, duration, etc
+  ManagementSeason:
+    type: object
+    description: defines periods for when experiments are created, used for management purposes
+    properties:
+      seasonDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key.
+      name:
+        type: string
+        description: name of the program
+      year:
+        type: integer
+        description: year the season accurs or starts
+  Site:
+    type: object
+    properties:
+      siteDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key. Maps to brapi abbreviation
+      name:
+        type: string
+        description: name of the location
+      type:
+        type: string
+        description: the group in which a location is classified
+        example: Breeding Location, Experimental Station
+      countryCode:
+        type: string
+        description: ISO-3 country code (ISO 3166-1 alpha-3). Maps to brapi countryCode
+  Breeder:
+    type: object
+    properties:
+      breederDbId:
+        type: integer
+        description: database identifier
+      initials:
+        type: string
+        description: first letters of the breeder's name
+      firstName:
+        type: string
+        description: first name
+      lastName:
+        type: string
+        description: last name
+  ExperimentLocation:
+    type: object
+    description: experiment conducted in one specific location
+    properties:
+      experimentLocationDbId:
+        type: number
+        description: identifier of the expt. location
+      experimentDbId:
+        type: number
+        description: database identifier. Maps to brapi studyDbId
+      experimentGroupDbId:
+        type: number
+        description: group owning this experiment location for augmented designs. (do not confuse with brapi trialDbId. In fact it is different)
+      name:
+        type: string
+        description: name of the experiment location. Maps to brapi
+      abbreviation:
+        type: string
+        description: short name of the experiment location.
+      programDbId:
+        type: number
+        description: program of the experiment. Maps to brapi
+      stewardDbId:
+        type: number
+        description: id of the breeder owning the experiment. No mapping to brapi ownerDbId
+      projectDbId:
+        type: number
+        description: project the experiment is associated with. No mapping to brapi
+      type:
+        type: string
+        description: general classification of the experiment of this exp. loc.
+      subtype:
+        type: string
+        description: sub classification of the experiment of this exp. loc.
+      subsubtype:
+        type: string
+        description: detailed sub classification of the experiment of this exp. loc.
+      managementSeasonDbId:
+        type: number
+        description: season of the experiment. Maps to brapi seasons
+      siteDbId:
+        type: number
+        description: site of the experiment. Maps to brapi locationDbId
+      locManagementProtocolIds:
+        description: protocols for manage the field for this expt location
+        type: array
+        items:
+          type: number
+      traitList:
+        description: the traits to measure and the protocols to take measurements
+        type: array
+        items:
+          type: object
+          properties:
+            traitDbId:
+              type: number
+            traitProtocolDbId:
+              type: number
+      entryList:
+        type: array
+        items:
+          type: object
+          properties:
+            entryDbId:
+              type: number
+            germplasmDbId:
+              type: number
+            name:
+              type: string
+            role:
+              type: string
+      attributes:
+        type: array
+        description: any extra information that may be relavant about an experiment location
+        items:
+          type: object
+          properties:
+            attributeDbId:
+              type: number
+            name:
+              type: string
+            value:
+              type: string
+      plantingProtocol:
+        description: specifies how to conduct planting for this expt. location
+        properties:
+          plantingProtocolDbId:
+            type: number
+          rowsByPlot:
+            type: number
+          hillsByPlot:
+            type: number
+          plotDensity:
+            type: number
+          distanceBetweenPlots:
+            type: number
+          alleyWidth:
+            type: number
+      exptLocationArrayHeaders:
+        description: column headers for the exptLocationArray
+        example: ["plotId", "entryId", "designId", "designType", "designLevel", "designValue"]
+        type: array
+        items:
+          type: string
+      exptLocationArray:
+        type: array
+        description: a two-dimensiuon array containing as many columns as defined in exptLocationArrayHeaders
+        example: | 
+          [["12346","346","3","augmentedGroup","0","100"],["12346","346","3","treatment","1","1"],["12346","346","3","replicate","2","1"],["12346","346","3","subPlot","3","1"]]
+        items:
+          type: array
+          items:
+            type: string
+  ExperimentLocationRef:
+    type: object
+    properties:
+      sites:
+        type: array
+        items:
+          $ref: '#/definitions/Site'
+      experimentDesignTypes:
+        type: array
+        items:
+          $ref: '#/definitions/DesignType'
+      projects:
+        type: array
+        items:
+          $ref: '#/definitions/Project'
+      managementSeasons:
+        type: array
+        items:
+          $ref: '#/definitions/ManagementSeason'
+      traits:
+        type: array
+        items:
+          $ref: '#/definitions/Trait'
+      traitProtocols:
+        type: array
+        items:
+          $ref: '#/definitions/TraitProtocol'
+      application:
+        type: object
+        description: properties relevant to KDXplore. WHICH ONES ARE IN FACT MANDATORY?
+        properties:
+          exportVersion:
+            type: number
+          databaseVersion:
+            type: number
+          databasePath:
+            type: string
+            description: is this required?
+          kdsmartVersion:
+            type: number
+          deviceIdentifier:
+            type: string
+          deviceName:
+            type: string
+          operatorName:
+            type: string
+          latestSampleDate:
+            type: string
+            format: date-time
+          tags:
+            type: array
+            items:
+              type: string
+          nameForColumn:
+            type: string
+          nameForRow:
+            type: string
+          nameForBlock:
+            type: string
+          nameForPlot:
+            type: string
+          plotIdentSummary:
+            type: object
+            properties:
+              plotIdentRange:
+                $ref: '#/definitions/Range'
+              xColumnRange:
+                $ref: '#/definitions/Range'
+              yRowRange:
+                $ref: '#/definitions/Range'
+              isUsedForBlocks:
+                type: boolean
+          plantingDate:
+            type: string
+            format: date-time
+            description: The actual date when an experiment location is planted in a field. CAN THIS BE PART OF THE RETURNING DATA?
+          traitNameStyle:
+            type: string
+            example: TRAILING_COLON
+          dateDownloaded:
+            type: string
+            format: date-time
+          plotIdentOption:
+            type: string
+            example: Y_THEN_X
+          trialLayout:
+            type: string
+            example: LOWER_LEFT | VERTICAL | ONE_WAY | 0 | 1 | LOWER_LEFT
+  FieldData:
+    type: object
+    properties:
+      fieldObservations:
+        description: TO BE DEFINED. data observations or samples taken at field level
+        type: object
+      experimentLocations:
+        type: object
+        properties:
+          experimentLocationDbId:
+            type: number
+          fieldName:
+            type: string
+            description: the specific actual field in a site/planting area where a location was planted
+          entryList:
+            description: In the scenario of replacing some entry for extraordinary reasons, the replacement entries must be declared here
+            type: array
+            items:
+              type: object
+              properties:
+                entryDbId:
+                  type: number
+                germplasmDbId:
+                  type: number
+                role:
+                  type: string
+                stockDbId:
+                  type: string
+                  description: inventory item where the entry was taken from
+          plots:
+            type: array
+            items:
+              type: object
+              properties:
+                plotDbId:
+                  type: number
+                entryDbId:
+                  type: number
+                germplasmDbId:
+                  type: number
+                  description: necessary here?
+                mappedArray:
+                  description: the mapped and field coordinates for the plot
+                  type: object
+                  properties:
+                    mappedX:
+                      type: number
+                    mappedY:
+                      type: number
+                    fieldX:
+                      type: number
+                    fieldY:
+                      type: number
+                comments:
+                  type: string
+                samples:
+                  type: array
+                  items: 
+                    type: object
+                    properties:
+                      sampleDbId:
+                        type: number
+                      subPlotDbId:
+                        description: Optional. Subplot can be a sub entity of plot, for example a row or just a single plant 
+                        type: number
+                      plantNumber:
+                        description: Optional. As long as a plant doesn't have a formal ID, a simple sequential number could be enough (?)
+                        type: number                      
+                      traitInstances:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            traitInstanceDbId:
+                              type: number
+                            traitDbId:
+                              type: number
+                            instanceNumber:
+                              type: number
+                            traitValue:
+                              type: string
+                            measuredOn:
+                              type: string
+                              format: date-time
+                            usedForScoring:
+                              description: not sure about this. Is it mandatory for KDX?
+                              type: boolean
+                            scoringSortOrder:
+                              description: not sure about this. Is it mandatory for KDX?
+                              type: number
+                      
+  Range:
+    type: object
+    properties:
+      max:
+        type: number
+      min:
+        type: number
+      name:
+        type: string
+  DesignType:
+    type: object
+    description: experiment design used for creating expt. locations
+    properties:
+      designTypeDbId:
+        type: number
+      name:
+        type: string
+  PlotLayout:
+    type: object
+    description: Describes the field design for plots of an experiment location
+    properties:
+      plotDbId:
+        type: number
+        description: identifier of the plot
+      row:
+        type: number
+        description: the row number (coordinate X) inside the design
+      range:
+        type: number
+        description: the range number (coordinate Y) inside the design
+      subBlock:
+        type: number
+        description: alternate sub-grouping of plots, if required
+      replicate:
+        type: number
+        description: repetition block for entries
+      plotCode:
+        type: string
+        description: plot number/name to display to users
+  Trait:
+    type: object
+    description: variable to measure
+    properties:
+      traitDbId:
+        type: number
+        description: identifier of the trait
+      name:
+        type: string
+        description: displaying name of the trait
+      level:
+        type: string
+        description: defines the unit over which a trait measurement is taken
+      description:
+        type: string
+        description: extended definition of a trait
+  TraitProtocol:
+    type: object
+    description: defines hot to observe or measure samples
+    properties:
+      traitProtocolDbId:
+        type: number
+        description: identifier of the trait protocol
+      unitDbId:
+        type: number
+        description: identifier of the measurement unit for this trait as specified by protocol
+      unitCode:
+        type: string
+        description: unit name displayed to users
+      methodDbId:
+        type: number
+        description: identifier of the measurement method for this trait as specified by protocol
+      methodCode:
+        type: string
+        description: method name displayed to users
+      dataType:
+        type: string
+        description: data type of the observations for a trait
+      validationRule:
+        type: string
+        description: rule used as first criteria of QA in trait measurments
+  ObservationMatrix:
+    type: object
+    description: a data matrix of phenotype obseervations for one more plots in an Experiment Location
+    properties:
+      experimentGroupDbId:
+        type: number
+        description: experiment group linked to the current observation matrix
+      observationMatrix:
+        type: array
+        items:
+          type: string
+        description: | 
+          A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being N the total number of trait observations
+        example: |
+          [['11','234','2007307T131805','some value'],
+          ['12','234','2007307T131805','some value2'],
+          ['13','235','2007307T131805','some value3']]
+  PlantSample:
+    type: object
+    description: specifies the exact experiment, plot and plant from where a sample came from
+    properties:
+      sampleDbId:
+        type: number
+        description: identifier of the plant sample. Maps to brapi
+      germplasmDbId:
+        type: number
+        description: germplasm associated to the plant. Maps to brapi
+      locationDbId:
+        type: number
+        description: location of the source experiment of the sample.
+      seasonDbId:
+        type: number
+        description: season of the source experiment.
+      plotDbId:
+        type: number 
+        description: source plot within a experiment. Maps to brapi
+      plantDbId:
+        type: number
+        description: specific individual. Maps to brapi
+  VendorContact:
+    type: object
+    properties:
+      name:
+        type: string
+        description: name of the contact for a vendor. Maps to brapi contactName
+      email:
+        type: string
+        description: Maps to brapi contactEmail
+      phone:
+        type: string
+        description: Maps to brapi contactPhone
+  StandardRequirements:
+    type: object
+    properties:
+      blankWellPositions:
+        type: array
+        items: 
+          type: string
+          example:  [A01, random]
+        description: Maps to brapi blankWellPosition.positions
+      inputFormatDetailsUrl:
+        type: string
+        description: Maps to brapi inputFormatDetails
+      inputFormats:
+        type: array
+        items:
+          type: string
+          example: [plate_96, tubes]
+        description: Maps to brapi inputFormats
+      maxConcentration:
+        type: string
+        description: Maps to brapi
+      maxVolume:
+        type: string
+        description: Maps to brapi
+      minConcentration:
+        type: string
+        description: Maps to brapi
+      minSampleNumber:
+        type: string
+        description: Maps to brapi
+      minVolume:
+        type: string
+        description: Maps to brapi
+      plateOrientation:
+        type: string
+        description: Maps to brapi
+        example: rowFirst| columnFirst
+      sampleTypeDetailsUrl:
+        type: string
+        description: Maps to brapi sampleTypeDetails
+      sampleTypes:
+        type: array
+        items:
+          type: string
+        description: Maps to brapi
+  Platform:
+    properties:
+      name:
+        type: string
+        description: maps to brapi platformName
+      shippingAddress:
+        type: string
+        description: maps to shippingAddress
+      standardRequirements:
+        $ref: '#/definitions/StandardRequirements'
+  Vendor:
+    type: object
+    properties:
+      address:
+        type: string
+        description: maps to brapi vendorAddress
+      city:
+        type: string
+        description: maps to brapi vendorCity
+      countryCode:
+        type: string
+        description: maps to brapi vendorCountry
+      name:
+        type: string
+        description: maps to brapi vendorName
+      email:
+        type: string
+        description: maps to brapi vendorEmail
+      phone:
+        type: string
+        description: maps to brapi vendorPhone
+      URL:
+        type: string
+        description: maps to brapi vendorURL
+      platform:
+        $ref: '#/definitions/Platform'
+      contact:
+        $ref: '#/definitions/VendorContact'
