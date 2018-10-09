@@ -182,21 +182,10 @@ definitions:
             type: number
           alleyWidth:
             type: number
-      exptLocationArrayHeaders:
-        description: column headers for the exptLocationArray
-        example: ["plotId", "entryId", "designId", "designType", "designLevel", "designValue"]
+      plotLayout:
         type: array
-        items:
-          type: string
-      exptLocationArray:
-        type: array
-        description: a two-dimensiuon array containing as many columns as defined in exptLocationArrayHeaders
-        example: | 
-          [["12346","346","3","augmentedGroup","0","100"],["12346","346","3","treatment","1","1"],["12346","346","3","replicate","2","1"],["12346","346","3","subPlot","3","1"]]
-        items:
-          type: array
-          items:
-            type: string
+        items: 
+          $ref: '#/definitions/PlotLayout'
   ExperimentLocationRef:
     type: object
     properties:
@@ -224,67 +213,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/TraitProtocol'
-      application:
-        type: object
-        description: properties relevant to KDXplore. WHICH ONES ARE IN FACT MANDATORY?
-        properties:
-          exportVersion:
-            type: number
-          databaseVersion:
-            type: number
-          databasePath:
-            type: string
-            description: is this required?
-          kdsmartVersion:
-            type: number
-          deviceIdentifier:
-            type: string
-          deviceName:
-            type: string
-          operatorName:
-            type: string
-          latestSampleDate:
-            type: string
-            format: date-time
-          tags:
-            type: array
-            items:
-              type: string
-          nameForColumn:
-            type: string
-          nameForRow:
-            type: string
-          nameForBlock:
-            type: string
-          nameForPlot:
-            type: string
-          plotIdentSummary:
-            type: object
-            properties:
-              plotIdentRange:
-                $ref: '#/definitions/Range'
-              xColumnRange:
-                $ref: '#/definitions/Range'
-              yRowRange:
-                $ref: '#/definitions/Range'
-              isUsedForBlocks:
-                type: boolean
-          plantingDate:
-            type: string
-            format: date-time
-            description: The actual date when an experiment location is planted in a field. CAN THIS BE PART OF THE RETURNING DATA?
-          traitNameStyle:
-            type: string
-            example: TRAILING_COLON
-          dateDownloaded:
-            type: string
-            format: date-time
-          plotIdentOption:
-            type: string
-            example: Y_THEN_X
-          trialLayout:
-            type: string
-            example: LOWER_LEFT | VERTICAL | ONE_WAY | 0 | 1 | LOWER_LEFT
   FieldData:
     type: object
     properties:
@@ -323,9 +251,6 @@ definitions:
                   type: number
                 entryDbId:
                   type: number
-                germplasmDbId:
-                  type: number
-                  description: necessary here?
                 mappedArray:
                   description: the mapped and field coordinates for the plot
                   type: object
@@ -338,6 +263,8 @@ definitions:
                       type: number
                     fieldY:
                       type: number
+                spatialCoordinates:
+                  $ref: '#/definitions/GeospatialPolygon'
                 comments:
                   type: string
                 samples:
@@ -369,13 +296,7 @@ definitions:
                             measuredOn:
                               type: string
                               format: date-time
-                            usedForScoring:
-                              description: not sure about this. Is it mandatory for KDX?
-                              type: boolean
-                            scoringSortOrder:
-                              description: not sure about this. Is it mandatory for KDX?
-                              type: number
-                      
+
   Range:
     type: object
     properties:
@@ -402,10 +323,10 @@ definitions:
         description: identifier of the plot
       row:
         type: number
-        description: the row number (coordinate X) inside the design
+        description: the unmapped row number (coordinate X) inside the design
       range:
         type: number
-        description: the range number (coordinate Y) inside the design
+        description: the unmapped range number (coordinate Y) inside the design
       subBlock:
         type: number
         description: alternate sub-grouping of plots, if required
@@ -415,6 +336,7 @@ definitions:
       plotCode:
         type: string
         description: plot number/name to display to users
+      
   Trait:
     type: object
     description: variable to measure
@@ -590,3 +512,36 @@ definitions:
         $ref: '#/definitions/Platform'
       contact:
         $ref: '#/definitions/VendorContact'
+  GeospatialPolygon:
+    type: object
+    properties:
+      type:
+        type: string
+        example: 'FeatureCollection'
+      features:
+        type: array
+        items:
+          type: object
+          properties:
+            properties:
+              type: object
+            type:
+              type: string
+              example: 'Feature'
+            geometry:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: Polygon | Point
+                coordinates: 
+                  example: [[-98.84702503681183,19.528148718037915],
+                  [-98.84655833244324,19.528148718037915],
+                  [-98.84655833244324,19.528881813560364],
+                  [-98.84702503681183,19.528881813560364],
+                  [-98.84702503681183,19.528148718037915]]
+                  type: array
+                  items:
+                    type: array
+                    items: 
+                      type: number
