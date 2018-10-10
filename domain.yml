@@ -267,6 +267,15 @@ definitions:
                   $ref: '#/definitions/GeospatialPolygon'
                 comments:
                   type: string
+                attributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        value:
+                          type: string
                 samples:
                   type: array
                   items: 
