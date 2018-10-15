@@ -155,6 +155,8 @@ definitions:
               type: string
             role:
               type: string
+            number:
+              type: string
       attributes:
         type: array
         description: any extra information that may be relavant about an experiment location
