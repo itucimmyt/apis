@@ -90,10 +90,10 @@ definitions:
     properties:
       experimentLocationDbId:
         type: number
-        description: identifier of the expt. location
+        description: identifier of the expt. location. Maps to brapi studyDbId
       experimentDbId:
         type: number
-        description: database identifier. Maps to brapi studyDbId
+        description: database identifier. Maps to brapi trialDbId
       experimentGroupDbId:
         type: number
         description: group owning this experiment location for augmented designs. (do not confuse with brapi trialDbId. In fact it is different)
