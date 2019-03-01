@@ -84,6 +84,15 @@ definitions:
       lastName:
         type: string
         description: last name
+      programDbId:
+        type: number
+        description: program associated to the breeder
+      projectDbIds:
+        type: array
+        description: projects in which a breeder has experiments
+        items:
+          type: number
+          
   ExperimentLocation:
     type: object
     description: experiment conducted in one specific location
@@ -188,7 +197,7 @@ definitions:
         type: array
         items: 
           $ref: '#/definitions/PlotLayout'
-  ExperimentLocationRef:
+  References:
     type: object
     properties:
       sites:
