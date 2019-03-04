@@ -102,32 +102,33 @@ definitions:
       code:
         type: string
         description: standard short name of the experiment
-      programDbId:
-        type: number
-        description: program of the experiment. Maps to brapi programDbId
       stewardDbId:
         type: number
         description: Breeder owning the experiment. No mapping to brapi ownerDbId
+      programDbId:
+        type: number
+        description: program of the experiment. Maps to brapi programDbId
       projectDbId:
         type: number
         description: project the experiment is associated with. No mapping to brapi
-      experimentDesignTypeDbId:
+      exptDesignTypeDbId:
         type: number
+        description: experimental design type
       type:
         type: string
-        description: general classification of the experiment of this exp. loc.
+        description: general classification of the experiment
       subtype:
         type: string
-        description: sub classification of the experiment of this exp. loc.
+        description: sub classification of the experiment
       subsubtype:
         type: string
-        description: detailed sub classification of the experiment of this exp. loc.
+        description: specific sub classification 
       managementSeasonDbId:
         type: number
         description: season of the experiment. Maps to brapi seasons
       stage:
         type: string
-        description: phase of development in relation with a product concept
+        description: phase of development in relation to a product concept
       entryList:
         type: array
         items:
