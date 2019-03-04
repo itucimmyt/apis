@@ -118,7 +118,7 @@ definitions:
               type: string
           plotArray:
             type: array
-            description: a two-dimensiuon array containing as many columns as defined in exptLocationArrayHeaders
+            description: a two-dimensiuon array containing the columns defined in exptLocationArrayHeaders
             example: | 
               [["12346","346","3","augmentedGroup","0","100"],["12346","346","3","treatment","1","1"],["12346","346","3","replicate","2","1"],["12346","346","3","subPlot","3","1"]]
             items:
