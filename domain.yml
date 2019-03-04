@@ -267,96 +267,52 @@ definitions:
   FieldData:
     type: object
     properties:
-      fieldObservations:
-        description: TO BE DEFINED. data observations or samples taken at field level
-        type: object
-      experimentLocations:
-        type: object
-        properties:
-          experimentLocationDbId:
-            type: number
-          fieldName:
+      experimentGroupDbId:
+        type: number
+        description: experiment group linked to the current observation matrix
+      sampleValues:
+        description: | 
+          A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being N the total number of trait observations        
+        example: |
+          [['11','234','2007307T131805','some value'],
+          ['12','234','2007307T131805','some value2'],
+          ['13','235','2007307T131805','some value3']]
+        type: array
+        items:
+          type: array
+          items:
             type: string
-            description: the specific actual field in a site/planting area where a location was planted
-          entryList:
-            description: In the scenario of replacing some entry for extraordinary reasons, the replacement entries must be declared here
-            type: array
-            items:
-              type: object
-              properties:
-                entryDbId:
-                  type: number
-                germplasmDbId:
-                  type: number
-                role:
-                  type: string
-                stockDbId:
-                  type: string
-                  description: inventory item where the entry was taken from
-          plots:
-            type: array
-            items:
-              type: object
-              properties:
-                plotDbId:
-                  type: number
-                entryDbId:
-                  type: number
-                mappedArray:
-                  description: the mapped and field coordinates for the plot
-                  type: object
-                  properties:
-                    mappedX:
-                      type: number
-                    mappedY:
-                      type: number
-                    fieldX:
-                      type: number
-                    fieldY:
-                      type: number
-                spatialCoordinates:
-                  $ref: '#/definitions/GeospatialPolygon'
-                comments:
-                  type: string
-                attributes:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                        value:
-                          type: string
-                samples:
-                  type: array
-                  items: 
-                    type: object
-                    properties:
-                      sampleDbId:
-                        type: number
-                      subPlotDbId:
-                        description: Optional. Subplot can be a sub entity of plot, for example a row or just a single plant 
-                        type: number
-                      plantNumber:
-                        description: Optional. As long as a plant doesn't have a formal ID, a simple sequential number could be enough (?)
-                        type: number                      
-                      traitInstances:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            traitInstanceDbId:
-                              type: number
-                            traitDbId:
-                              type: number
-                            instanceNumber:
-                              type: number
-                            traitValue:
-                              type: string
-                            measuredOn:
-                              type: string
-                              format: date-time
-
+      plantingSite:
+          type: object
+          properties:
+            fieldName:
+              type: string
+              description: the specific actual field name in a site/planting area where a location was planted (optional, when the location has not a DbId)
+            fieldDbId:
+              type: number
+              description: the actual specific place where the expt location was planted
+      entryList:
+        description: In the scenario of replacing some entry for extraordinary reasons, the replacement entries must be declared here
+        type: array
+        items:
+          type: object
+          properties:
+            entryDbId:
+              type: number
+            germplasmDbId:
+              type: number
+            role:
+              type: string
+            stockDbId:
+              type: string
+              description: inventory item where the entry was taken from
+      mappedArray:
+        type: array
+        items:
+          type: object
+          poperties:
+            mappedX:
+              type: number
   ExperimentDesignType:
     type: object
     description: experiment design used for creating expt. locations
@@ -407,23 +363,6 @@ definitions:
       validationRule:
         type: string
         description: rule used as first criteria of QA in trait measurments
-  ObservationMatrix:
-    type: object
-    description: a data matrix of phenotype obseervations for one more plots in an Experiment Location
-    properties:
-      experimentGroupDbId:
-        type: number
-        description: experiment group linked to the current observation matrix
-      observationMatrix:
-        type: array
-        items:
-          type: string
-        description: | 
-          A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being N the total number of trait observations
-        example: |
-          [['11','234','2007307T131805','some value'],
-          ['12','234','2007307T131805','some value2'],
-          ['13','235','2007307T131805','some value3']]
   PlantSample:
     type: object
     description: specifies the exact experiment, plot and plant from where a sample came from
