@@ -65,10 +65,14 @@ definitions:
       type:
         type: string
         description: the group in which a location is classified
-        example: Breeding Location, Experimental Station
+        example: Breeding Location, Experimental Station, Field
       countryCode:
         type: string
         description: ISO-3 country code (ISO 3166-1 alpha-3). Maps to brapi countryCode
+      geospatialObjectDbId:
+        type: number
+        description: geospatial coordinates defining the site
+        
   Breeder:
     type: object
     properties:
@@ -478,7 +482,7 @@ definitions:
         $ref: '#/definitions/Platform'
       contact:
         $ref: '#/definitions/VendorContact'
-  GeospatialPolygon:
+  GeospatialObject:
     type: object
     properties:
       type:
