@@ -4,98 +4,6 @@ info:
   title: BrAPI Domain
 
 definitions:
-  Program:
-    type: object
-    properties:
-      programDbId:
-        type: integer
-        description: database identifier
-      code:
-        type: string
-        description: short name, intended as key. Maps to brapi abbreviation
-      name:
-        type: string
-        description: name of the program, Maps to brapi same field
-      description:
-        type: string
-        description: Explanation of program's goals, functions, etc. Maps to brapi objective
-  Project:
-    type: object
-    properties:
-      projectDbId:
-        type: integer
-        description: database identifier
-      code:
-        type: string
-        description: short name, intended as key.
-      name:
-        type: string
-        description: name of the program
-      description:
-        type: string
-        description: explanation of goals, indicatior, duration, etc
-  ManagementSeason:
-    type: object
-    description: defines periods for when experiments are created, used for management purposes
-    properties:
-      seasonDbId:
-        type: integer
-        description: database identifier
-      code:
-        type: string
-        description: short name, intended as key.
-      name:
-        type: string
-        description: name of the program
-      year:
-        type: integer
-        description: year the season accurs or starts
-  Site:
-    type: object
-    properties:
-      siteDbId:
-        type: integer
-        description: database identifier
-      code:
-        type: string
-        description: short name, intended as key. Maps to brapi abbreviation
-      name:
-        type: string
-        description: name of the location
-      type:
-        type: string
-        description: the group in which a location is classified
-        example: Breeding Location, Experimental Station, Field
-      countryCode:
-        type: string
-        description: ISO-3 country code (ISO 3166-1 alpha-3). Maps to brapi countryCode
-      geospatialObjectDbId:
-        type: number
-        description: geospatial coordinates defining the site
-        
-  Breeder:
-    type: object
-    properties:
-      breederDbId:
-        type: integer
-        description: database identifier
-      initials:
-        type: string
-        description: first letters of the breeder's name
-      firstName:
-        type: string
-        description: first name
-      lastName:
-        type: string
-        description: last name
-      programDbId:
-        type: number
-        description: program associated to the breeder
-      projectDbIds:
-        type: array
-        description: projects in which a breeder has experiments
-        items:
-          type: number
   Experiment:
     type: object
     description: unit of research in a project
@@ -267,6 +175,98 @@ definitions:
         type: number
       alleyWidth:
         type: number
+  Program:
+    type: object
+    properties:
+      programDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key. Maps to brapi abbreviation
+      name:
+        type: string
+        description: name of the program, Maps to brapi same field
+      description:
+        type: string
+        description: Explanation of program's goals, functions, etc. Maps to brapi objective
+  Project:
+    type: object
+    properties:
+      projectDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key.
+      name:
+        type: string
+        description: name of the program
+      description:
+        type: string
+        description: explanation of goals, indicatior, duration, etc
+  ManagementSeason:
+    type: object
+    description: defines periods for when experiments are created, used for management purposes
+    properties:
+      seasonDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key.
+      name:
+        type: string
+        description: name of the program
+      year:
+        type: integer
+        description: year the season accurs or starts
+  Site:
+    type: object
+    properties:
+      siteDbId:
+        type: integer
+        description: database identifier
+      code:
+        type: string
+        description: short name, intended as key. Maps to brapi abbreviation
+      name:
+        type: string
+        description: name of the location
+      type:
+        type: string
+        description: the group in which a location is classified
+        example: Breeding Location, Experimental Station, Field
+      countryCode:
+        type: string
+        description: ISO-3 country code (ISO 3166-1 alpha-3). Maps to brapi countryCode
+      geospatialObjectDbId:
+        type: number
+        description: geospatial coordinates defining the site
+        
+  Breeder:
+    type: object
+    properties:
+      breederDbId:
+        type: integer
+        description: database identifier
+      initials:
+        type: string
+        description: first letters of the breeder's name
+      firstName:
+        type: string
+        description: first name
+      lastName:
+        type: string
+        description: last name
+      programDbId:
+        type: number
+        description: program associated to the breeder
+      projectDbIds:
+        type: array
+        description: projects in which a breeder has experiments
+        items:
+          type: number
 
   FieldData:
     type: object
