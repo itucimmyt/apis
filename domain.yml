@@ -270,6 +270,12 @@ definitions:
       experimentGroupDbId:
         type: number
         description: experiment group linked to the current observation matrix
+      fieldName:
+        type: string
+        description: the specific actual field name in a site/planting area where a location was planted (optional, when the location has not a DbId)
+      fieldDbId:
+        type: number
+        description: the actual specific place where the expt location was planted
       sampleValues:
         description: | 
           A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being N the total number of trait observations        
@@ -282,15 +288,6 @@ definitions:
           type: array
           items:
             type: string
-      plantingSite:
-          type: object
-          properties:
-            fieldName:
-              type: string
-              description: the specific actual field name in a site/planting area where a location was planted (optional, when the location has not a DbId)
-            fieldDbId:
-              type: number
-              description: the actual specific place where the expt location was planted
       entryList:
         description: In the scenario of replacing some entry for extraordinary reasons, the replacement entries must be declared here
         type: array
@@ -307,12 +304,13 @@ definitions:
               type: string
               description: inventory item where the entry was taken from
       mappedArray:
+        description: array of plots with assigned coordinates where clumns are plotDbId, mappedX, mappedY, fieldX and fieldY
+        example: [[12345,1,1,10,10],[12346,1,2,10,11]]
         type: array
         items:
-          type: object
-          poperties:
-            mappedX:
-              type: number
+          type: array
+          items:
+            type: number
   ExperimentDesignType:
     type: object
     description: experiment design used for creating expt. locations
