@@ -1,7 +1,7 @@
 info:
-  description: "Entities used in brapi-compilant calls."
+  description: "Entities for experiment APIs"
   version: '1.0.0'
-  title: BrAPI Domain
+  title: EiBS Domain Objects
 
 definitions:
   Experiment:
