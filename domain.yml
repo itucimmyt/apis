@@ -125,6 +125,53 @@ definitions:
               type: array
               items:
                 type: string
+  FieldData:
+    type: object
+    properties:
+      experimentGroupDbId:
+        type: number
+        description: experiment group linked to the current observation matrix
+      fieldName:
+        type: string
+        description: the specific actual field name in a site/planting area where a location was planted (optional, when the location has not a DbId)
+      fieldDbId:
+        type: number
+        description: the actual specific place where the expt location was planted
+      sampleValues:
+        description: | 
+          A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being N the total number of trait observations        
+        example: |
+          [['11','234','2007307T131805','some value'],
+          ['12','234','2007307T131805','some value2'],
+          ['13','235','2007307T131805','some value3']]
+        type: array
+        items:
+          type: array
+          items:
+            type: string
+      entryList:
+        description: In the scenario of replacing some entry for extraordinary reasons, the replacement entries must be declared here
+        type: array
+        items:
+          type: object
+          properties:
+            entryDbId:
+              type: number
+            germplasmDbId:
+              type: number
+            role:
+              type: string
+            stockDbId:
+              type: string
+              description: inventory item where the entry was taken from
+      mappedArray:
+        description: array of plots with assigned coordinates where clumns are plotDbId, mappedX, mappedY, fieldX and fieldY
+        example: [[12345,1,1,10,10],[12346,1,2,10,11]]
+        type: array
+        items:
+          type: array
+          items:
+            type: number
   References:
     type: object
     properties:
@@ -268,53 +315,6 @@ definitions:
         items:
           type: number
 
-  FieldData:
-    type: object
-    properties:
-      experimentGroupDbId:
-        type: number
-        description: experiment group linked to the current observation matrix
-      fieldName:
-        type: string
-        description: the specific actual field name in a site/planting area where a location was planted (optional, when the location has not a DbId)
-      fieldDbId:
-        type: number
-        description: the actual specific place where the expt location was planted
-      sampleValues:
-        description: | 
-          A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being N the total number of trait observations        
-        example: |
-          [['11','234','2007307T131805','some value'],
-          ['12','234','2007307T131805','some value2'],
-          ['13','235','2007307T131805','some value3']]
-        type: array
-        items:
-          type: array
-          items:
-            type: string
-      entryList:
-        description: In the scenario of replacing some entry for extraordinary reasons, the replacement entries must be declared here
-        type: array
-        items:
-          type: object
-          properties:
-            entryDbId:
-              type: number
-            germplasmDbId:
-              type: number
-            role:
-              type: string
-            stockDbId:
-              type: string
-              description: inventory item where the entry was taken from
-      mappedArray:
-        description: array of plots with assigned coordinates where clumns are plotDbId, mappedX, mappedY, fieldX and fieldY
-        example: [[12345,1,1,10,10],[12346,1,2,10,11]]
-        type: array
-        items:
-          type: array
-          items:
-            type: number
   ExperimentDesignType:
     type: object
     description: experiment design used for creating expt. locations
