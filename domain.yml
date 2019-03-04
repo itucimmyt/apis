@@ -92,7 +92,69 @@ definitions:
         description: projects in which a breeder has experiments
         items:
           type: number
-          
+  Experiment:
+    type: object
+    description: unit of research in a project
+    properties:
+      name:
+        type: string
+        description: name of the experiment location. Maps to brapi
+      code:
+        type: string
+        description: standard short name of the experiment
+      programDbId:
+        type: number
+        description: program of the experiment. Maps to brapi programDbId
+      stewardDbId:
+        type: number
+        description: Breeder owning the experiment. No mapping to brapi ownerDbId
+      projectDbId:
+        type: number
+        description: project the experiment is associated with. No mapping to brapi
+      experimentDesignTypeDbId:
+        type: number
+      type:
+        type: string
+        description: general classification of the experiment of this exp. loc.
+      subtype:
+        type: string
+        description: sub classification of the experiment of this exp. loc.
+      subsubtype:
+        type: string
+        description: detailed sub classification of the experiment of this exp. loc.
+      managementSeasonDbId:
+        type: number
+        description: season of the experiment. Maps to brapi seasons
+      stage:
+        type: string
+        description: phase of development in relation with a product concept
+      entryList:
+        type: array
+        items:
+          type: object
+          properties:
+            entryDbId:
+              type: number
+            germplasmDbId:
+              type: number
+            name:
+              description: display identifier for this entry
+              type: string
+            role:
+              type: string
+            number:
+              type: string
+              description: position occupied in the list
+      traitList:
+        description: the traits to measure and the protocols to take measurements
+        type: array
+        items:
+          type: object
+          properties:
+            traitDbId:
+              type: number
+            traitProtocolDbId:
+              type: number
   ExperimentLocation:
     type: object
     description: experiment conducted in one specific location
@@ -109,30 +171,6 @@ definitions:
       name:
         type: string
         description: name of the experiment location. Maps to brapi
-      abbreviation:
-        type: string
-        description: short name of the experiment location.
-      programDbId:
-        type: number
-        description: program of the experiment. Maps to brapi
-      stewardDbId:
-        type: number
-        description: id of the breeder owning the experiment. No mapping to brapi ownerDbId
-      projectDbId:
-        type: number
-        description: project the experiment is associated with. No mapping to brapi
-      type:
-        type: string
-        description: general classification of the experiment of this exp. loc.
-      subtype:
-        type: string
-        description: sub classification of the experiment of this exp. loc.
-      subsubtype:
-        type: string
-        description: detailed sub classification of the experiment of this exp. loc.
-      managementSeasonDbId:
-        type: number
-        description: season of the experiment. Maps to brapi seasons
       siteDbId:
         type: number
         description: site of the experiment. Maps to brapi locationDbId
@@ -141,31 +179,6 @@ definitions:
         type: array
         items:
           type: number
-      traitList:
-        description: the traits to measure and the protocols to take measurements
-        type: array
-        items:
-          type: object
-          properties:
-            traitDbId:
-              type: number
-            traitProtocolDbId:
-              type: number
-      entryList:
-        type: array
-        items:
-          type: object
-          properties:
-            entryDbId:
-              type: number
-            germplasmDbId:
-              type: number
-            name:
-              type: string
-            role:
-              type: string
-            number:
-              type: string
       attributes:
         type: array
         description: any extra information that may be relavant about an experiment location
@@ -178,25 +191,27 @@ definitions:
               type: string
             value:
               type: string
-      plantingProtocol:
-        description: specifies how to conduct planting for this expt. location
-        properties:
-          plantingProtocolDbId:
-            type: number
-          rowsByPlot:
-            type: number
-          hillsByPlot:
-            type: number
-          plotDensity:
-            type: number
-          distanceBetweenPlots:
-            type: number
-          alleyWidth:
-            type: number
+      plantingProtocolDbId:
+        type: number
+        description: identifier of the planting protocol to use for this expt. location
       plotLayout:
-        type: array
-        items: 
-          $ref: '#/definitions/PlotLayout'
+        type: object
+        properties:
+          plotArrayHeaders:
+            description: column headers for the plotArray
+            example: ["plotId", "entryId", "designId", "designType", "designLevel", "designValue"]
+            type: array
+            items:
+              type: string
+          plotArray:
+            type: array
+            description: a two-dimensiuon array containing as many columns as defined in exptLocationArrayHeaders
+            example: | 
+              [["12346","346","3","augmentedGroup","0","100"],["12346","346","3","treatment","1","1"],["12346","346","3","replicate","2","1"],["12346","346","3","subPlot","3","1"]]
+            items:
+              type: array
+              items:
+                type: string
   References:
     type: object
     properties:
@@ -207,7 +222,11 @@ definitions:
       experimentDesignTypes:
         type: array
         items:
-          $ref: '#/definitions/DesignType'
+          $ref: '#/definitions/ExperimentDesignType'
+      programs:
+        type: array
+        items:
+          $ref: '#/definitions/Program'
       projects:
         type: array
         items:
@@ -224,6 +243,26 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/TraitProtocol'
+      plantingProtocols:
+        type: array
+        items:
+          $ref: '#/definitions/PlantingProtocol'
+  PlantingProtocol:
+    description: specifies how to conduct planting for one expt. location in a specific field
+    properties:
+      plantingProtocolDbId:
+        type: number
+      rowsByPlot:
+        type: number
+      hillsByPlot:
+        type: number
+      plotDensity:
+        type: number
+      distanceBetweenPlots:
+        type: number
+      alleyWidth:
+        type: number
+
   FieldData:
     type: object
     properties:
@@ -317,46 +356,15 @@ definitions:
                               type: string
                               format: date-time
 
-  Range:
-    type: object
-    properties:
-      max:
-        type: number
-      min:
-        type: number
-      name:
-        type: string
-  DesignType:
+  ExperimentDesignType:
     type: object
     description: experiment design used for creating expt. locations
     properties:
-      designTypeDbId:
+      experimentDesignTypeDbId:
         type: number
       name:
         type: string
-  PlotLayout:
-    type: object
-    description: Describes the field design for plots of an experiment location
-    properties:
-      plotDbId:
-        type: number
-        description: identifier of the plot
-      row:
-        type: number
-        description: the unmapped row number (coordinate X) inside the design
-      range:
-        type: number
-        description: the unmapped range number (coordinate Y) inside the design
-      subBlock:
-        type: number
-        description: alternate sub-grouping of plots, if required
-      replicate:
-        type: number
-        description: repetition block for entries
-      plotCode:
-        type: string
-        description: plot number/name to display to users
-      
+
   Trait:
     type: object
     description: variable to measure
