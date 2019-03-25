@@ -8,7 +8,7 @@ definitions:
     type: object
     description: unit of research in a project
     properties:
-      dbId:
+      experimentDbId:
         type: string
         description: database identifier
       name:
