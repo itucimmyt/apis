@@ -8,6 +8,9 @@ definitions:
     type: object
     description: unit of research in a project
     properties:
+      dbId:
+        type: string
+        description: database identifier
       name:
         type: string
         description: name of the experiment location. Maps to brapi
