@@ -225,6 +225,14 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/PlantingProtocol'
+      breeders:
+        type: array
+        items:
+          $ref: '#/definitions/Breeder'
+      geospatialObjects:
+        type: array
+        items:
+          $ref: '#/definitions/GeospatialObject'
   PlantingProtocol:
     description: specifies how to conduct planting for one expt. location in a specific field
     properties:
