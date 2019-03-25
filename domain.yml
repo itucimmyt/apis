@@ -146,17 +146,17 @@ definitions:
         description: the actual specific place where the expt location was planted
       sampleValues:
         description: | 
-          A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being N the total number of trait observations        
-        example: |
-          [['11','234','2007307T131805','some value'],
-          ['12','234','2007307T131805','some value2'],
-          ['13','235','2007307T131805','some value3']]
+          A NxM array containing trait observation values(an ordered vector of plotDbId, traitDbId, timestamp and observation value) being M the total number of trait observations        
+        example: 
+          [["11","234","2007307T131805","some value"],
+          ["12","234","2007307T131805","some value2"],
+          ["13","235","2007307T131805","some value3"]]
         type: array
         items:
           type: array
           items:
             type: string
-      entryList:
+      replacements:
         description: In the scenario of replacing some entry for extraordinary reasons, the replacement entries must be declared here
         type: array
         items:
@@ -164,13 +164,25 @@ definitions:
           properties:
             entryDbId:
               type: number
+              description: specifies an entry to be replaced, when a complete entry is replaced in all of their plots
+              required: false
+            plotDbId:
+              type: number
+              description: specifies a plot to be replaced, when specific plots are replaced
             germplasmDbId:
               type: number
+              description: specifies the germplasm used as replacement
             role:
               type: string
+              description: |
+                defines the role of the replacement, if it's different from the original
             stockDbId:
               type: string
-              description: inventory item where the entry was taken from
+              description: inventory the replacement was taken. Optional
+            supressed:
+              type: boolean
+              default: false
+              description: used when the given entry/plot is simply invalidated, with no replacement.
       mappedArray:
         description: array of plots with assigned coordinates where clumns are plotDbId, mappedX, mappedY, fieldX and fieldY
         example: [[12345,1,1,10,10],[12346,1,2,10,11]]
