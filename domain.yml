@@ -119,7 +119,7 @@ definitions:
         properties:
           plotArrayHeaders:
             description: column headers for the plotArray
-            example: ["plotId", "entryId", "designId", "designType", "designLevel", "designValue"]
+            example: ["plotDbId", "entryDbId", "designDbId", "designType", "designLevel", "designValue"]
             type: array
             items:
               type: string
