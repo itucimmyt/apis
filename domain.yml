@@ -165,7 +165,6 @@ definitions:
             entryDbId:
               type: number
               description: specifies an entry to be replaced, when a complete entry is replaced in all of their plots
-              required: false
             plotDbId:
               type: number
               description: specifies a plot to be replaced, when specific plots are replaced
