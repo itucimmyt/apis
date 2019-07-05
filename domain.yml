@@ -135,6 +135,14 @@ definitions:
               type: array
               items:
                 type: string
+          plotCoordinates:
+            type: array
+            items:
+              type: array
+              items:
+                type: string
+            description: two-dimension array of plot coordinates (plotDbId,X,Y)
+            example: [["12346","1","1"],["12347","1","2"],["12348","1","3"]]
       plotBarcodes:
         type: array
         description: two-dimension array of plotDbId,barcode format and value
