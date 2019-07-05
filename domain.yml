@@ -135,6 +135,14 @@ definitions:
               type: array
               items:
                 type: string
+      plotBarcodes:
+        type: array
+        description: two-dimension array of plotDbId,barcode format and value
+        items:
+          type: array
+          items:
+            type: string
+        example: [["100","LOGMARS","123456678"],["100","USPS","ABC123456"],["100","UPC","123456789012"]]
   FieldData:
     type: object
     properties:
@@ -256,6 +264,24 @@ definitions:
       unit:
         type: string
         description: the measurement unit for alleyWidth, size and distanceBetweenPlots
+  LocManagementProtocol:
+    description: specifies how to conduct planting for one expt. location in a specific field
+    properties:
+      locManagementProtocolDbId:
+        type: number
+      name:
+        type: string
+      description:
+        type: string
+      unitDbId:
+        type: number
+      unitCode:
+        type: string
+      methodDbId:
+        type: number
+      methodCode:
+        type: string
+      
   Program:
     type: object
     properties:
@@ -324,6 +350,9 @@ definitions:
       geospatialObjectDbId:
         type: number
         description: geospatial coordinates defining the site
+      megaEnvironment:
+        type: string
+        description: representative environment for the site, should be inferred from geospatial object, or manually defined if such is not available
         
   Breeder:
     type: object
