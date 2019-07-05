@@ -54,7 +54,10 @@ definitions:
             germplasmDbId:
               type: number
             name:
-              description: display identifier for this entry
+              description: the identifier for this entry
+              type: string
+            codedName:
+              description: the standarized identifier for the entry, if there is one
               type: string
             role:
               type: string
@@ -248,6 +251,11 @@ definitions:
         type: number
       alleyWidth:
         type: number
+      size:
+        type: number
+      unit:
+        type: string
+        description: the measurement unit for alleyWidth, size and distanceBetweenPlots
   Program:
     type: object
     properties:
@@ -360,6 +368,9 @@ definitions:
       name:
         type: string
         description: displaying name of the trait
+      code:
+        type: string
+        description: standardized short name of the trait
       level:
         type: string
         description: defines the unit over which a trait measurement is taken
