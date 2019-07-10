@@ -126,26 +126,27 @@ definitions:
       plots:
         type: array
         items:
-          type: object
-          properties:
-            plotDbId:
-              type: number
-            entryDbId:
-              type: number
-            sequential:
-              type: number
-            x:
-              type: number
-            y:
-              type: number
-            barcodes:
-              type: array
-              description: two-dimension array of barcode format and value
-              items:
-                type: array
-                items:
-                  type: string
-              example: [["LOGMARS","123456678"],["USPS","ABC123456"],["UPC","123456789012"]]
+          $ref: '#/definitions/Plot'
+
+  Plot:
+    type: object
+    properties:
+      plotDbId:
+        type: number
+      number:
+        type: number
+      x:
+        type: number
+      y:
+        type: number
+      barcodes:
+        type: array
+        description: two-dimension array of barcode format and value
+        items:
+          type: array
+          items:
+            type: string
+        example: [["LOGMARS","123456678"],["USPS","ABC123456"],["UPC","123456789012"]]
   FieldData:
     type: object
     properties:
