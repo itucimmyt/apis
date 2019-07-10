@@ -97,23 +97,11 @@ definitions:
       siteDbId:
         type: number
         description: site of the experiment. Maps to brapi locationDbId
-      locManagementProtocolIds:
+      locManagementProtocolDbIds:
         description: protocols for manage the field for this expt location
         type: array
         items:
           type: number
-      attributes:
-        type: array
-        description: any extra information that may be relavant about an experiment location
-        items:
-          type: object
-          properties:
-            attributeDbId:
-              type: number
-            name:
-              type: string
-            value:
-              type: string
       plantingProtocolDbId:
         type: number
         description: identifier of the planting protocol to use for this expt. location
@@ -135,22 +123,29 @@ definitions:
               type: array
               items:
                 type: string
-          plotCoordinates:
-            type: array
-            items:
-              type: array
-              items:
-                type: string
-            description: two-dimension array of plot coordinates (plotDbId,X,Y)
-            example: [["12346","1","1"],["12347","1","2"],["12348","1","3"]]
-      plotBarcodes:
+      plots:
         type: array
-        description: two-dimension array of plotDbId,barcode format and value
         items:
-          type: array
-          items:
-            type: string
-        example: [["100","LOGMARS","123456678"],["100","USPS","ABC123456"],["100","UPC","123456789012"]]
+          type: object
+          properties:
+            plotDbId:
+              type: number
+            entryDbId:
+              type: number
+            sequential:
+              type: number
+            x:
+              type: number
+            y:
+              type: number
+            barcodes:
+              type: array
+              description: two-dimension array of barcode format and value
+              items:
+                type: array
+                items:
+                  type: string
+              example: [["LOGMARS","123456678"],["USPS","ABC123456"],["UPC","123456789012"]]
   FieldData:
     type: object
     properties:
@@ -269,9 +264,11 @@ definitions:
         type: number
       size:
         type: number
+      length:
+        type: number
       unit:
         type: string
-        description: the measurement unit for alleyWidth, size and distanceBetweenPlots
+        description: the measurement unit for alleyWidth, length and distanceBetweenPlots
   LocManagementProtocol:
     description: specifies how to conduct planting for one expt. location in a specific field
     properties:
