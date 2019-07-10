@@ -147,6 +147,8 @@ definitions:
           items:
             type: string
         example: [["LOGMARS","123456678"],["USPS","ABC123456"],["UPC","123456789012"]]
+      geospatialObjectDbId:
+        $ref: '#/definitions/GeospatialObject'
   FieldData:
     type: object
     properties:
