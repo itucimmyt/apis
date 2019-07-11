@@ -9,7 +9,7 @@ definitions:
     description: unit of research in a project
     properties:
       experimentDbId:
-        type: string
+        type: number
         description: database identifier
       name:
         type: string
@@ -85,9 +85,6 @@ definitions:
       experimentLocationDbId:
         type: number
         description: identifier of the expt. location. Maps to brapi studyDbId
-      experimentDbId:
-        type: number
-        description: database identifier. Maps to brapi trialDbId
       experimentGroupDbId:
         type: number
         description: group owning this experiment location for augmented designs. (do not confuse with brapi trialDbId. In fact it is different)
