@@ -91,17 +91,17 @@ definitions:
       experimentGroupDbId:
         type: number
         description: group owning this experiment location for augmented designs. (do not confuse with brapi trialDbId. In fact it is different)
+      experimentGroupName:
+        type: string
       name:
         type: string
         description: name of the experiment location. Maps to brapi
       siteDbId:
         type: number
         description: site of the experiment. Maps to brapi locationDbId
-      locManagementProtocolDbIds:
+      locManagementProtocolDbId:
         description: protocols for manage the field for this expt location
-        type: array
-        items:
-          type: number
+        type: number
       plantingProtocolDbId:
         type: number
         description: identifier of the planting protocol to use for this expt. location
@@ -137,9 +137,13 @@ definitions:
         type: number
       number:
         type: number
-      x:
+      unmappedX:
         type: number
-      y:
+      unmappedY:
+        type: number
+      latitude:
+        type: number
+      longitude:
         type: number
       barcodes:
         type: array
@@ -149,8 +153,6 @@ definitions:
           items:
             type: string
         example: [["LOGMARS","123456678"],["USPS","ABC123456"],["UPC","123456789012"]]
-      geospatialObjectDbId:
-        $ref: '#/definitions/GeospatialObject'
   FieldData:
     type: object
     properties:
