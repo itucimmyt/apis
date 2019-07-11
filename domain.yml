@@ -218,7 +218,7 @@ definitions:
       experimentDesignTypes:
         type: array
         items:
-          $ref: '#/definitions/ExperimentDesignType'
+          $ref: '#/definitions/StatDesignType'
       programs:
         type: array
         items:
@@ -387,7 +387,7 @@ definitions:
         items:
           type: number
 
-  StatDesignTypes:
+  StatDesignType:
     type: object
     description: experiment design used for creating expt. locations
     properties:
