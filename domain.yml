@@ -105,6 +105,8 @@ definitions:
       plantingProtocolDbId:
         type: number
         description: identifier of the planting protocol to use for this expt. location
+      plantingDate:
+        type: string
       plotLayout:
         type: object
         properties:
