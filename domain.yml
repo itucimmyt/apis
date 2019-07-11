@@ -387,7 +387,7 @@ definitions:
         items:
           type: number
 
-  ExperimentDesignType:
+  StatDesignTypes:
     type: object
     description: experiment design used for creating expt. locations
     properties:
