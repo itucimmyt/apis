@@ -26,9 +26,9 @@ definitions:
       projectDbId:
         type: number
         description: project the experiment is associated with. No mapping to brapi
-      exptDesignTypeDbId:
+      statDesignTypeDbId:
         type: number
-        description: experimental design type
+        description: statistical design type
       type:
         type: string
         description: general classification of the experiment
